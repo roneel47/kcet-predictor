@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model College {
+  college_code String @id @db.VarChar(20)
+  college_name String
+
+  @@map("colleges")
+}
+
+model CollegeMetadata {
+  college_code String   @id @db.VarChar(20)
+  city         String?
+  district     String?
+  autonomous   Boolean?
+  college_type String?
+  university   String?
+  naac_grade   String?
+  nirf_rank    Int?
+  website      String?
+
+  @@map("college_metadata")
+}
+
+model Cutoff {
+  id                BigInt  @id @default(autoincrement())
+  college_code      String  @db.VarChar(20)
+  college_name      String
+  branch_name       String
+  category          String  @db.VarChar(10)
+  cutoff_rank       Decimal @db.Decimal
+  counselling_year  Int     @default(2025)
+  counselling_round Int     @default(3)
+
+  @@map("cutoffs")
+}

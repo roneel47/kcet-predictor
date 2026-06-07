@@ -1,0 +1,48 @@
+# ============================================================
+# KCET Predictor — Docker Compose
+# Runs: PostgreSQL + Next.js app
+# ============================================================
+
+version: '3.9'
+
+services:
+  # ── PostgreSQL Database ─────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: kcet_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: kcet_predictor
+      POSTGRES_USER: kcet_user
+      POSTGRES_PASSWORD: kcet_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./scripts/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kcet_user -d kcet_predictor"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Next.js Application ─────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kcet_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://kcet_user:kcet_password@db:5432/kcet_predictor
+      NODE_ENV: production
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+    driver: local
