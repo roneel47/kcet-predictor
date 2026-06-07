@@ -2,6 +2,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { Analytics } from '@vercel/analytics/next';
 import { Navbar } from '@/components/layout/Navbar';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen bg-slate-50 text-slate-900 antialiased">
         <Navbar />
         <main>{children}</main>
+        <Analytics />
       </body>
     </html>
   );

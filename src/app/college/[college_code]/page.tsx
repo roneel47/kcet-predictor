@@ -7,8 +7,6 @@ import {
   Award, Hash, ArrowLeft, ChevronDown, ChevronUp
 } from 'lucide-react';
 import Link from 'next/link';
-import { ALL_CATEGORIES } from '@/lib/types';
-import { cn } from '@/lib/utils/cn';
 
 interface CollegeDetail {
   college_code: string;
