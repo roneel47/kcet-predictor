@@ -1,6 +1,15 @@
 // src/components/shared/RecommendationBadge.tsx
 import { RecommendationLevel } from '@/lib/types';
 import { cn } from '@/lib/utils/cn';
+import { Info } from 'lucide-react';
+
+const explanations: Record<RecommendationLevel, string> = {
+  Guaranteed: 'Your rank is significantly better than the previous closing rank. Admission is highly likely if trends remain similar.',
+  Safe: 'Your rank is comfortably within the previous closing rank range. You have a strong chance of getting admission.',
+  Reach: 'Your rank is worse than the previous closing rank. Admission is unlikely but still an aspirational option.',
+  Dream: 'Your rank is slightly worse than the previous closing rank. Admission is possible if cutoffs increase this year.',
+  'Not Eligible': 'You are not eligible based on the previous cutoff data.',
+};
 
 interface Props {
   level: RecommendationLevel;
@@ -33,7 +42,10 @@ export function RecommendationBadge({ level, className }: Props) {
       )}
     >
       <span>{icons[level]}</span>
-      {level}
+      <span>{level}</span>
+      <span title={explanations[level]} className="ml-1 opacity-80" aria-hidden>
+        <Info className="w-3.5 h-3.5" />
+      </span>
     </span>
   );
 }

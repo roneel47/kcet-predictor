@@ -217,7 +217,27 @@ export default function ResultsPage() {
                         <span className="text-xs leading-snug">{r.branch_name}</span>
                       </td>
                       <td className="px-4 py-3">
-                        <div className="font-semibold text-slate-900">{r.cutoff_rank.toLocaleString()}</div>
+                        <div className="flex items-center gap-2">
+                          <div className="font-semibold text-slate-900">{r.cutoff_rank.toLocaleString()}</div>
+                          {/* difference tooltip */}
+                          {typeof r.cutoff_rank === 'number' && typeof r.student_rank === 'number' && (
+                            (() => {
+                              const diff = r.cutoff_rank - r.student_rank;
+                              const better = diff > 0;
+                              const abs = Math.abs(diff).toLocaleString();
+                              const title = better
+                                ? `Your rank is ${abs} places better than the previous cutoff.`
+                                : `Your rank is ${abs} places worse than the previous cutoff.`;
+                              return (
+                                <span title={title} className="text-slate-400 text-xs flex items-center gap-1">
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" />
+                                  </svg>
+                                </span>
+                              );
+                            })()
+                          )}
+                        </div>
                         <div className="text-xs text-slate-400">vs {r.student_rank.toLocaleString()}</div>
                       </td>
                       <td className="px-4 py-3 text-slate-600 text-xs">{r.city ?? '—'}</td>

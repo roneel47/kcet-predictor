@@ -9,10 +9,14 @@ export default function HomePage() {
       <section className="hero-gradient text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-3 mb-4">
               <span className="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">
                 KEA UGCET 2025 — Round 3 Data
               </span>
+              <div className="bg-white/10 text-white text-xs px-3 py-1 rounded-full">
+                Based on KEA UGCET 2025 Round 3 Official Cutoff Data
+                <div className="text-blue-100 text-[11px] mt-0.5">10,949 Records • 229 Colleges • 104 Branches</div>
+              </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
               Find Your Perfect<br />Engineering College
