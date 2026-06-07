@@ -11,6 +11,9 @@ model College {
   college_code String @id @db.VarChar(20)
   college_name String
 
+  metadata CollegeMetadata?
+  cutoffs  Cutoff[]
+
   @@map("colleges")
 }
 
@@ -25,6 +28,8 @@ model CollegeMetadata {
   nirf_rank    Int?
   website      String?
 
+  college College @relation(fields: [college_code], references: [college_code])
+
   @@map("college_metadata")
 }
 
@@ -37,6 +42,8 @@ model Cutoff {
   cutoff_rank       Decimal @db.Decimal
   counselling_year  Int     @default(2025)
   counselling_round Int     @default(3)
+
+  college College @relation(fields: [college_code], references: [college_code])
 
   @@map("cutoffs")
 }
